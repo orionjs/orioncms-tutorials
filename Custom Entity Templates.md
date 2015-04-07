@@ -17,8 +17,8 @@ orion.addEntity('posts', {
     sidebarName: 'Posts',
     pluralName: 'Posts',
     singularName: 'Post',
-   ## createTemplate:'adminPostsCreate',
-  ##  updateTemplate:'adminPostsUpdate',
+    createTemplate:'adminPostsCreate',
+    updateTemplate:'adminPostsUpdate',
     tableColumns: [
         { data:'title', title: 'Title' },
     ]
@@ -37,8 +37,8 @@ orion.addEntity('schedule', {
     sidebarName: 'Schedule',
     pluralName: 'Schedule',
     singularName: 'Schedule',
-   ## createTemplate:'adminScheduleCreate',
-  ##  updateTemplate:'adminScheduleUpdate',
+    createTemplate:'adminScheduleCreate',
+    updateTemplate:'adminScheduleUpdate',
     tableColumns: [
         { data:'title', title: 'Title' },
     ]
