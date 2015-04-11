@@ -38,7 +38,7 @@ orion.addEntity('contacts', {
 ```
 
 Then go to your server folder and add to your method.js file
-```
+```js
 Meteor.methods({
   insertMethod: function (doc) {
     check(doc, orion.entities.yourentity.schema);
@@ -50,10 +50,10 @@ Meteor.methods({
 ```
 
 after that create a new client side js file i.e in client/views/contactform.js
-```
+```html
 {{> quickForm schema='orion.entities.yourentity.schema' id="myForm" type="method" meteormethod="insertMethod" }}
 
-//yourentity is the name of the entity your create earlier ('contacts')
+<!-- yourentity is the name of the entity your create earlier ('contacts') -->
 ```
 
 ## Done
