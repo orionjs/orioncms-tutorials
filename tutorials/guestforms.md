@@ -54,7 +54,6 @@ after that create a new template to show the form
 <template name="contact">
   {{> quickForm schema='orion.entities.yourentity.schema' id="myForm" type="method" meteormethod="insertMethod" }}
   <!-- yourentity is the name of the entity your create earlier ('contacts') -->
-
 </template>
 ```
 
