@@ -49,11 +49,13 @@ Meteor.methods({
 //yourentity is the name of the entity your create earlier ('contacts')
 ```
 
-after that create a new client side js file i.e in client/views/contactform.js
+after that create a new template to show the form
 ```html
-{{> quickForm schema='orion.entities.yourentity.schema' id="myForm" type="method" meteormethod="insertMethod" }}
+<template name="contact">
+  {{> quickForm schema='orion.entities.yourentity.schema' id="myForm" type="method" meteormethod="insertMethod" }}
+  <!-- yourentity is the name of the entity your create earlier ('contacts') -->
 
-<!-- yourentity is the name of the entity your create earlier ('contacts') -->
+</template>
 ```
 
 ## Done
