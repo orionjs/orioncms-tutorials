@@ -14,13 +14,17 @@ orion.addEntity('contacts', {
   },
   email:{
     type: String,
-    optional: true,
+    regEx: SimpleSchema.RegEx.Email,
     label: "Email",
   },
   comment:{
-    type: Number,
-    optional: true,
+    type: String,
     label: "Comment",
+    min: 20,
+    max: 600,
+    autoform: {
+        rows: 5
+      }
   },
 }, {
   icon: 'bookmark',
