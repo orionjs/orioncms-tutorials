@@ -4,3 +4,5 @@
 ### Tutorials
 
 * [Custom Entity Templates](tutorials/custom_entity_templates.md)
+* [Guest Forms](tutorials/guestforms.md)
+* [Seeding Data](tutorials/seeding_data.md)
