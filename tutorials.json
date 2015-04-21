@@ -31,7 +31,7 @@
   },
   {
     "slug": "guest-forms",
-    "title": "Forms accessible by guests (non-login users)",
+    "title": "Forms accessible by guests",
     "description": "How to create forms, such as surver and contact forms accessible by guest",
     "author": "Timothy",
     "authorGithub": "timfam",
