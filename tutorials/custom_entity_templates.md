@@ -1,4 +1,3 @@
-# Using Custom Templates for Entities
 By default Orion uses autoform - quickform https://github.com/aldeed/meteor-autoform/#quickform. If your needs are basic, quickform more than meets your insert/update requirements - you can stop reading. However if your forms are complex or have requirements where a single form look and feel is not enough then you will need to override the default quickform and use the individual field components of "autoform" e.g afQuickField, afObjectField instead.
 
 ##Overriding Quickform
