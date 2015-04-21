@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "custom-entities",
+    "title": "Using Custom Templates for Entities",
+    "description": "This tutorial teach us how to create custom templates for entities",
+    "author": "Timothy",
+    "authorGithub": "timfam",
+    "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/custom_entity_templates.md"
+  },
+  {
+    "slug": "set-seo",
+    "title": "Set SEO",
+    "description": "Set seo in orion",
+    "author": "Saint Asky",
+    "authorGithub": "loongmxbt",
+    "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/set_seo.md"
+  }
+]
