@@ -5,7 +5,7 @@ Lets say you have two entity types 'post' and "schedule" and you want to use htt
 
 Now add a new entity type or update an old one; insert the custom template names after the *singularName* property
 
-```
+```js
 orion.addEntity('posts', {
   title: {
     type: String,
