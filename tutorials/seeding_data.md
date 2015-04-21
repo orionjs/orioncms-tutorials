@@ -1,4 +1,3 @@
-# Seed your new Orion app with data
 Adding seed data to your app is easy, we will use a slightly customized worflow of **dburles:factory** and **anti:fake** (clone this repo https://github.com/pociej/meteor-fake instead, original has minor bug ). Create directory "server/seeds" and add a seed.js file. Copy and paste the snippet below into your file and modify accordingly.
 
 ```js
