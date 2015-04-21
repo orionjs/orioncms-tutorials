@@ -2,7 +2,7 @@
   {
     "slug": "custom-entities",
     "title": "Using Custom Templates for Entities",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "description": "Create individual templates for your entities.",
     "author": "Timothy",
     "authorGithub": "timfam",
     "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/custom_entity_templates.md",
@@ -12,7 +12,7 @@
   {
     "slug": "set-seo",
     "title": "Set SEO",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "description": "How to make  your Orion app SEO friendly.",
     "author": "Saint Asky",
     "authorGithub": "loongmxbt",
     "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/set_seo.md",
@@ -22,7 +22,7 @@
   {
     "slug": "seed",
     "title": "Seed your new Orion app with data",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "description": "Got a new app and need working data, read this tutorial",
     "author": "Timothy",
     "authorGithub": "timfam",
     "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/seeding_data.md",
@@ -32,7 +32,7 @@
   {
     "slug": "guest-forms",
     "title": "Forms accessible by guests (non-login users)",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "description": "How to create forms, such as surver and contact forms accessible by guest",
     "author": "Timothy",
     "authorGithub": "timfam",
     "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/guestforms.md",
