@@ -7,7 +7,7 @@
     "authorGithub": "timfam",
     "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/custom_entity_templates.md",
     "smallImage": "http://lorempixel.com/600/400/technics/",
-    "bigImage": "http://lorempixel.com/1000/600/technics/"
+    "bigImage": "http://lorempixel.com/1200/700/technics/"
   },
   {
     "slug": "set-seo",
@@ -17,7 +17,7 @@
     "authorGithub": "loongmxbt",
     "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/set_seo.md",
     "smallImage": "http://lorempixel.com/600/400/technics/",
-    "bigImage": "http://lorempixel.com/1000/600/technics/"
+    "bigImage": "http://lorempixel.com/1200/700/technics/"
   },
   {
     "slug": "seed",
@@ -27,7 +27,7 @@
     "authorGithub": "timfam",
     "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/seeding_data.md",
     "smallImage": "http://lorempixel.com/600/400/technics/",
-    "bigImage": "http://lorempixel.com/1000/600/technics/"
+    "bigImage": "http://lorempixel.com/1200/700/technics/"
   },
   {
     "slug": "guest-forms",
@@ -37,6 +37,6 @@
     "authorGithub": "timfam",
     "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/guestforms.md",
     "smallImage": "http://lorempixel.com/600/400/technics/",
-    "bigImage": "http://lorempixel.com/1000/600/technics/"
+    "bigImage": "http://lorempixel.com/1200/700/technics/"
   }
 ]
