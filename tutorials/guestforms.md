@@ -1,4 +1,3 @@
-# Forms accessible by guests (non-login users)
 To add contact, survey forms guest can access in the front end and stores data securely for admin to view at the backend. You will have to start by creating a entity to hold the schema. create a new js filein your 'both' or 'orion' folder (it go anywhere) and add something like this in there. 
 
 ```js
