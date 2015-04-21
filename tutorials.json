@@ -2,7 +2,7 @@
   {
     "slug": "custom-entities",
     "title": "Using Custom Templates for Entities",
-    "description": "This tutorial teach us how to create custom templates for entities",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     "author": "Timothy",
     "authorGithub": "timfam",
     "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/custom_entity_templates.md",
@@ -12,10 +12,30 @@
   {
     "slug": "set-seo",
     "title": "Set SEO",
-    "description": "Set seo in orion",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "author": "Saint Asky",
     "authorGithub": "loongmxbt",
     "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/set_seo.md",
+    "smallImage": "http://lorempixel.com/600/400/technics/",
+    "bigImage": "http://lorempixel.com/1000/600/technics/"
+  },
+  {
+    "slug": "seed",
+    "title": "Seed your new Orion app with data",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "author": "Timothy",
+    "authorGithub": "timfam",
+    "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/seeding_data.md",
+    "smallImage": "http://lorempixel.com/600/400/technics/",
+    "bigImage": "http://lorempixel.com/1000/600/technics/"
+  },
+  {
+    "slug": "guest-forms",
+    "title": "Forms accessible by guests (non-login users)",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "author": "Timothy",
+    "authorGithub": "timfam",
+    "content": "https://raw.githubusercontent.com/orionjs/tutorials/master/tutorials/guestforms.md",
     "smallImage": "http://lorempixel.com/600/400/technics/",
     "bigImage": "http://lorempixel.com/1000/600/technics/"
   }
