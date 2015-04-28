@@ -8,45 +8,5 @@
     "file": "upgrading-to-v1-0.md",
     "smallImage": "http://i.imgur.com/U7QGtra.jpg",
     "bigImage": "http://i.imgur.com/l43lRWL.jpg"
-  },
-  {
-    "slug": "custom-entities",
-    "title": "Using Custom Templates for Entities",
-    "description": "Create individual templates for your entities.",
-    "author": "Timothy",
-    "authorGithub": "timfam",
-    "file": "custom_entity_templates.md",
-    "smallImage": "http://lorempixel.com/600/400/technics/",
-    "bigImage": "http://lorempixel.com/1200/700/technics/"
-  },
-  {
-    "slug": "set-seo",
-    "title": "Set SEO",
-    "description": "How to make  your Orion app SEO friendly.",
-    "author": "Saint Asky",
-    "authorGithub": "loongmxbt",
-    "file": "set_seo.md",
-    "smallImage": "http://lorempixel.com/600/400/technics/",
-    "bigImage": "http://lorempixel.com/1200/700/technics/"
-  },
-  {
-    "slug": "seed",
-    "title": "Seed your new Orion app with data",
-    "description": "Got a new app and need working data, read this tutorial",
-    "author": "Timothy",
-    "authorGithub": "timfam",
-    "file": "seeding_data.md",
-    "smallImage": "http://lorempixel.com/600/400/technics/",
-    "bigImage": "http://lorempixel.com/1200/700/technics/"
-  },
-  {
-    "slug": "guest-forms",
-    "title": "Forms accessible by guests",
-    "description": "How to create forms, such as surver and contact forms accessible by guest",
-    "author": "Timothy",
-    "authorGithub": "timfam",
-    "file": "guestforms.md",
-    "smallImage": "http://lorempixel.com/600/400/technics/",
-    "bigImage": "http://lorempixel.com/1200/700/technics/"
   }
 ]
