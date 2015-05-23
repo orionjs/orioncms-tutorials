@@ -1,11 +1,11 @@
-# Bulletproofing your app
-## Security and Browser policies
 For protecting your server against script injection and your clients against XSS attacks,
 we recommend adding the following packages:
+
 ```sh
 meteor remove insecure autopublish
 meteor add audit-arguments-check browser-policy matteodem:easy-security
 ```
+
 * [audit-argument-checks](https://atmospherejs.com/meteor/audit-argument-checks) checks the correctness of your development ensuring you that you've carefully checked user's inputs.
 * [browser-policy](https://atmospherejs.com/meteor/browser-policy) constraints modern users in not using anything else except what is precisely specified.
 * [matteodem:easy-security](https://atmospherejs.com/matteodem/easy-security) rate limits method calls, to avoid attacks DDOS-like attacks.
@@ -46,6 +46,3 @@ for origin in ['*.google-analytics.com', 'browser-update.org']
     origin = "#{protocol}://#{origin}"
     BrowserPolicy.content.allowOriginForAll origin
 ```
-
-
-If you want to contribute with this tutorial you can do it [here](https://github.com/orionjs/tutorials).
