@@ -141,5 +141,3 @@ Other things like config, pages, etc. where re-writed but have the same api.
 
 You can look at the [example blog](https://github.com/orionjs/example-blog) which 
 was also upgraded to version ```1.0```. 
-
-If you want to contribute with this tutorial you can do it [here](https://github.com/orionjs/tutorials).
