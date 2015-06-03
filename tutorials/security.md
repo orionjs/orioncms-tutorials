@@ -3,7 +3,7 @@ we recommend adding the following packages:
 
 ```sh
 meteor remove insecure autopublish
-meteor add audit-arguments-check browser-policy matteodem:easy-security
+meteor add audit-argument-checks browser-policy matteodem:easy-security
 ```
 
 * [audit-argument-checks](https://atmospherejs.com/meteor/audit-argument-checks) checks the correctness of your development ensuring you that you've carefully checked user's inputs.
