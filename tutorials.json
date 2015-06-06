@@ -18,5 +18,15 @@
     "file": "security.md",
     "smallImage": "http://i.imgur.com/ZKtmTLq.jpg",
     "bigImage": "http://i.imgur.com/bXKOYu0.jpg"
+  },
+   {
+    "slug": "how-to-contribute",
+    "title": "How to Contribute",
+    "description": "Set up your project so you contribute code",
+    "author": "Alen Balja",
+    "authorGithub": "mraak",
+    "file": "how-to-contribute.md",
+    "smallImage": "http://currentlabel.co.uk/hammock-thumb.jpg",
+    "bigImage": "http://currentlabel.co.uk/hammock.jpg"
   }
 ]
