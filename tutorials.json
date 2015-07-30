@@ -1,5 +1,15 @@
 [
   {
+    "slug": "microscope",
+    "title": "OrionJS with Microscope Tutorial",
+    "description": "A comprehensive tutorial that that goes through the end-to-end setup for Orion",
+    "author": "fuzzybabybunny",
+    "authorGithub": "fuzzybabybunny",
+    "file": "microscope.md",
+    "smallImage": "http://i.imgur.com/U7QGtra.jpg",
+    "bigImage": "http://i.imgur.com/l43lRWL.jpg"
+  },
+  {
     "slug": "upgrading-to-v1-0",
     "title": "Upgrade your Orion app to v1.0",
     "description": "A complete tutorial on how to upgrade your app to be compatible with Orion v1.0",
