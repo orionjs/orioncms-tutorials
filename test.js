@@ -39,6 +39,11 @@ describe('tutorials.json', function(){
       if (re.test(fileContents)) {
         throw Error('code without language should not start in a new line');
       }
+
+      var re = /```console\n/g;
+      if (re.test(fileContents)) {
+        throw Error('console language does not exist');
+      }
     }
   });
 })
