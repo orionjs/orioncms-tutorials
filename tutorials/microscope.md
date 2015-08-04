@@ -1,3 +1,48 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Meteor OrionJS with Microscope Tutorial](#meteor-orionjs-with-microscope-tutorial)
+  - [Purpose](#purpose)
+  - [Cloning Microscope](#cloning-microscope)
+  - [Download OrionJS](#download-orionjs)
+  - [Initial Impressions](#initial-impressions)
+  - [Creating Users](#creating-users)
+  - [Adding and Removing Roles from Users](#adding-and-removing-roles-from-users)
+    - [Getting Roles](#getting-roles)
+    - [Setting Roles](#setting-roles)
+  - [Adding Collections to OrionJS](#adding-collections-to-orionjs)
+  - [Updating Collection Documents](#updating-collection-documents)
+    - [Schemas](#schemas)
+  - [Adding Comments Collection](#adding-comments-collection)
+  - [Custom Input Types (Widgets)](#custom-input-types-widgets)
+    - [Adding Summernote](#adding-summernote)
+    - [Orion Attributes](#orion-attributes)
+    - [Adding Images to Amazon S3 (updated 07/28/2015)](#adding-images-to-amazon-s3-updated-07282015)
+      - [Setting up S3](#setting-up-s3)
+      - [Configuring OrionJS](#configuring-orionjs)
+  - [Changing Tabular Templates (updated 7/29/2015)](#changing-tabular-templates-updated-7292015)
+    - [orion.attributeColumn()](#orionattributecolumn)
+    - [Custom Tabular Templates](#custom-tabular-templates)
+      - [Template-Level Subscriptions](#template-level-subscriptions)
+      - [Meteor Tabular Render](#meteor-tabular-render)
+      - [Meteor Tabular with Actual Templates](#meteor-tabular-with-actual-templates)
+  - [Dictionary (updated 7/28/2015)](#dictionary-updated-7282015)
+  - [Relationships](#relationships)
+    - [hasOne](#hasone)
+      - [Chicken and the Egg](#chicken-and-the-egg)
+      - [Correcting File Load Order](#correcting-file-load-order)
+    - [hasMany](#hasmany)
+    - [Multiple Relationships (updated 7/31/2015)](#multiple-relationships-updated-7312015)
+      - [Limitations of Defining Relationships](#limitations-of-defining-relationships)
+  - [Setting Roles and Permissions (updated 8/3/2015)](#setting-roles-and-permissions-updated-832015)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Meteor OrionJS with Microscope Tutorial #
+
+For questions, pull requests, or error submissions for this tutorial, go [here.](https://github.com/fuzzybabybunny/microscope-orionjs)
+
 ## Purpose ##
 
 I haven't been able to find a good tutorial that goes through the end-to-end setup for OrionJS, so I decided to create this tutorial both as a learning resource for others but also as a way for me to keep track of my own progress as I poke around OrionJS and figure out how to do stuff with it.
@@ -85,7 +130,7 @@ Better. The invisible alert box is still taking up space but I can't be screwed 
 
 ## Creating Users ##
 
-Looks like we need to create users and log in first before we can see the OrionJS backend.
+Looks like we need to create users and log in first before we can see the OrionJS backend. 
 
 Go here and replace the original `// create two users` code with this:
 
@@ -94,10 +139,10 @@ Go here and replace the original `// create two users` code with this:
 ```javascript
 /server/fixtures.js
 
-// Fixture data
+// Fixture data 
 if (Posts.find().count() === 0) {
   var now = new Date().getTime();
-
+  
   // create two users
 
   var sachaId = Accounts.createUser({
@@ -120,7 +165,7 @@ if (Posts.find().count() === 0) {
 
   var sacha = Meteor.users.findOne(sachaId);
   var tom = Meteor.users.findOne(tomId);
-
+  
   var telescopeId = Posts.insert({
     title: 'Introducing Telescope',
     userId: sacha._id,
@@ -130,7 +175,7 @@ if (Posts.find().count() === 0) {
     commentsCount: 2,
     upvoters: [], votes: 0
   });
-
+  
   Comments.insert({
     postId: telescopeId,
     userId: tom._id,
@@ -175,7 +220,7 @@ Instead, each separate `role` is stored in a `Roles` collection and the `userId`
 ### Getting Roles###
 Let's screw around in the Chrome console before we do anything. While in the `Accounts` admin page, do:
 
-```js
+```console
 var id = Meteor.users.findOne({username: "sacha"})._id;
 Roles.userHasRole(id, "admin")
 
@@ -185,7 +230,7 @@ It should return `true`. We got Sesha's userId and then used that ID to check if
 
 Likewise, each user has a `roles()` and `hasRole()` method on its object:
 
-```js
+```console
 // gets the currently logged in user, which should be Sassha
 var user = Meteor.user();
 user.roles();
@@ -221,7 +266,7 @@ var tom = Meteor.users.findOne({username: 'tom'});
 Roles.addUserToRoles( tom._id ,  ["admin"] );
 ```
 
-If we go back to the OrionJS admin console we should see that now Tom and Sache are both admins.
+If we go back to the OrionJS admin console we should see that now Tom and Sache are both admins. 
 
 Now we want to remove Sachet as an admin.
 
@@ -235,8 +280,8 @@ var nameIcantSpel = Meteor.users.findOne({username: 'sacha'});
 Roles.removeUserFromRoles( nameIcantSpel._id, ["admin"] );
 ```
 You'll notice that you can log into `OrionJS` as Sacsh, but you won't see `Accounts` on the sidebar since he's no longer an `admin`. So log in as Tom instead.
-
-And now Tom is the only admin!
+ 
+And now Tom is the only admin! 
 
 ![enter image description here](https://lh3.googleusercontent.com/2cXRDE9AILHEWVhLumU2Fei-Tzf67Uwl8rOCZGfcsOk=s0 "Screenshot from 2015-07-24 00:26:13.png")
 
@@ -263,8 +308,8 @@ Posts = new orion.collection('posts', {
     //  * The text that you want to show in the sidebar.
     //  * The default value is the name of the collection, so
     //  * in this case it is not necessary.
-
-    title: 'Posts'
+     
+    title: 'Posts' 
   },
   /**
    * Tabular settings for this collection
@@ -273,15 +318,15 @@ Posts = new orion.collection('posts', {
     // here we set which data columns we want to appear on the data table
     // in the CMS panel
     columns: [
-      {
-        data: "title",
-        title: "Title"
-      },{
-        data: "author",
-        title: "Author"
-      },{
-        data: "submitted",
-        title: "Submitted"
+      { 
+        data: "title", 
+        title: "Title" 
+      },{ 
+        data: "author", 
+        title: "Author" 
+      },{ 
+        data: "submitted", 
+        title: "Submitted" 
       },
     ]
   }
@@ -296,7 +341,7 @@ Posts.deny({
   update: function(userId, post, fieldNames) {
     // may only edit the following two fields:
 ```
-If you go back to the Microscope home page you'll see that everything appears to have remained normal. Orion collections are just extended Mongo collections.
+If you go back to the Microscope home page you'll see that everything appears to have remained normal. Orion collections are just extended Mongo collections. 
 
 Now it looks like we got `Posts` appearing in `OrionJS`.
 
@@ -314,11 +359,11 @@ Luckily the error is pretty descriptive. This form needs either a schema or a co
 
 ##Updating Collection Documents##
 
-When we click on one of the table items we expect to go to an update form for that particular item. `OrionJS` uses the vastly powerful `aldeed:autoform` package to generate its forms. `aldeed:autoform` in turn uses the `aldeed:simple-schema` package to know *how* to generate its forms.
+When we click on one of the table items we expect to go to an update form for that particular item. `OrionJS` uses the vastly powerful `aldeed:autoform` package to generate its forms. `aldeed:autoform` in turn uses the `aldeed:simple-schema` package to know *how* to generate its forms. 
 
 ###Schemas###
 
-Schemas are these little (tee-hee) things that define how the data in your database should be. If you've got a `User` document with a `first_name` property, you'd expect the value to be a `type: String`. If having a first name is critical, you'd want it to be `optional: false`.
+Schemas are these little (tee-hee) things that define how the data in your database should be. If you've got a `User` document with a `first_name` property, you'd expect the value to be a `type: String`. If having a first name is critical, you'd want it to be `optional: false`. 
 
 We use schemas to keep our data consistent. MongoDB is inherently a schema-less database. It would happily allow you to screw yourself over by storing an array of booleans inside the `first_name` property of your `user` document, for instance. And then you go to access it and your wife leaves you (probably not your husband because he's clueless).
 
@@ -335,7 +380,7 @@ Let's start by defining a schema for our `Posts` collection all the way at the v
       $addToSet: {upvoters: this.userId},
       $inc: {votes: 1}
     });
-
+    
     if (! affected)
       throw new Meteor.Error('invalid', "You weren't able to upvote that post");
   }
@@ -434,8 +479,8 @@ Comments = new orion.collection('comments', {
     //  * The text that you want to show in the sidebar.
     //  * The default value is the name of the collection, so
     //  * in this case it is not necessary.
-
-    title: 'Comments'
+     
+    title: 'Comments' 
   },
   /**
    * Tabular settings for this collection
@@ -444,15 +489,15 @@ Comments = new orion.collection('comments', {
     // here we set which data columns we want to appear on the data table
     // in the CMS panel
     columns: [
-      {
-        data: "author",
-        title: "Author"
-      },{
-        data: "postId",
-        title: "Post ID"
-      },{
-        data: "submitted",
-        title: "Submitted"
+      { 
+        data: "author", 
+        title: "Author" 
+      },{ 
+        data: "postId", 
+        title: "Post ID" 
+      },{ 
+        data: "submitted", 
+        title: "Submitted" 
       },
     ]
   }
@@ -465,28 +510,28 @@ Meteor.methods({
       postId: String,
       body: String
     });
-
+    
     var user = Meteor.user();
     var post = Posts.findOne(commentAttributes.postId);
 
     if (!post)
       throw new Meteor.Error('invalid-comment', 'You must comment on a post');
-
+    
     comment = _.extend(commentAttributes, {
       userId: user._id,
       author: user.username,
       submitted: new Date()
     });
-
+    
     // update the post with the number of comments
     Posts.update(comment.postId, {$inc: {commentsCount: 1}});
-
+    
     // create the comment, save the id
     comment._id = Comments.insert(comment);
-
+    
     // now create a notification, informing the user that there's been a comment
     createCommentNotification(comment);
-
+    
     return comment._id;
   }
 });
@@ -544,7 +589,7 @@ Now do this to the `body` property:
 
     // now create a notification, informing the user that there's been a comment
     createCommentNotification(comment);
-
+    
     return comment._id;
   }
 });
@@ -585,7 +630,7 @@ Niiiice.
 
 ###Orion Attributes###
 
-So what the hell is the `orion.attribute` we adding as the value for the `body` key in our schema? How about we just use our Chrome Console?
+So what the hell is the `orion.attribute` we adding as the value for the `body` key in our schema? How about we just use our Chrome Console? 
 ```
 orion.attribute('summernote', {
   label: 'Body'
@@ -627,11 +672,11 @@ Let's survey the improvements by going to the main page and clicking on the comm
 
 ![enter image description here](https://lh3.googleusercontent.com/8ja1upLimMWalVzUCAMWNmtULEb-xpvPzOiih5l99wg=s0 "Screenshot from 2015-07-24 18:46:03.png")
 
-Beauty.
+Beauty. 
 
 ###Adding Images to Amazon S3 (updated 07/28/2015)###
 
-No comment will be complete without image spamming.
+No comment will be complete without image spamming. 
 
 Some notes:
 
@@ -669,8 +714,8 @@ Create a new file:
 
 /**
  * Official S3 Upload Provider
- *
- * Please replace this function with the
+ * 
+ * Please replace this function with the 
  * provider you prefer.
  *
  * If success, call success(publicUrl);
@@ -706,8 +751,8 @@ orion.filesystem.providerUpload = function(options, success, failure, progress) 
 
 /**
  * Official S3 Remove Provider
- *
- * Please replace this function with the
+ * 
+ * Please replace this function with the 
  * provider you prefer.
  *
  * If success, call success();
@@ -787,7 +832,7 @@ If we go back to our admin panel and look at comments, we see that the table is 
 
 1. The `Submitted` column contains WAY too much information. Something like Month-Day-Year-Time would look nicer. I'm going to completely ignore you people who do it the more logical way of Time-Day-Month-Year because, uh, freedom.
 
-2. We also have the issue of the `Post ID` column being essentially stupid. I'd prefer if that column contained the title of the Post instead.
+2. We also have the issue of the `Post ID` column being essentially stupid. I'd prefer if that column contained the title of the Post instead. 
 
 3. I also want a column that shows a short blurb of the comment's `body`, something like `Interesting project Sacha, can I...`
 
@@ -810,8 +855,8 @@ Comments = new orion.collection('comments', {
     //  * The text that you want to show in the sidebar.
     //  * The default value is the name of the collection, so
     //  * in this case it is not necessary.
-
-    title: 'Comments'
+     
+    title: 'Comments' 
   },
   /**
    * Tabular settings for this collection
@@ -820,12 +865,12 @@ Comments = new orion.collection('comments', {
     // here we set which data columns we want to appear on the data table
     // in the CMS panel
     columns: [
-      {
-        data: "author",
-        title: "Author"
-      },{
-        data: "postId",
-        title: "Post ID"
+      { 
+        data: "author", 
+        title: "Author" 
+      },{ 
+        data: "postId", 
+        title: "Post ID" 
       },
       orion.attributeColumn('createdAt', 'submitted', 'FREEDOM!!!'),
     ]
@@ -851,7 +896,7 @@ Now, some freedom-hating people probably want a custom template for Time-Day-Mon
 
 ###Custom Tabular Templates###
 
-Now onto issue #2 - the `Post ID` column should be the title of the Post instead.
+Now onto issue #2 - the `Post ID` column should be the title of the Post instead. 
 
 Open up Chrome Console and type in `Comments.findOne()`. It found a comment, right?
 
@@ -859,7 +904,7 @@ Now do `Posts.findOne()`. Hmmm... no post found. That's because this route isn't
 
 ####Template-Level Subscriptions####
 
-Meteor can subscribe to data in normal template callbacks (`onRendered, onCreated`). And as it turns out, OrionJS has a very standardized template naming scheme*.
+Meteor can subscribe to data in normal template callbacks (`onRendered, onCreated`). And as it turns out, OrionJS has a very standardized template naming scheme*. 
 
 `collections.myCollection.index` - the main page that lists all the items in the collection
 `collections.myCollection.create` - the form for creating a new item in the collection
@@ -888,7 +933,7 @@ So let's use this to subscribe to the `Posts` collection on the `comments.index`
 ReactiveTemplates.onCreated('collections.comments.index', function() {
 
   this.subscribe('posts', {sort: {submitted: -1, _id: -1}, limit: 0});
-
+  
 });
 ```
 
@@ -909,7 +954,7 @@ Comments = new orion.collection('comments', {
   singularName: 'comment', // The name of one of these items
   pluralName: 'comments', // The name of more than one of these items
   link: {
-    title: 'Comments'
+    title: 'Comments' 
   },
   /**
    * Tabular settings for this collection
@@ -918,9 +963,9 @@ Comments = new orion.collection('comments', {
     // here we set which data columns we want to appear on the data table
     // in the CMS panel
     columns: [
-      {
-        data: "author",
-        title: "Author"
+      { 
+        data: "author", 
+        title: "Author" 
       },{
         data: "postId",
         title: "Post Title",
@@ -978,9 +1023,9 @@ The HTML for this comment actually looks like:
 <p><span style=\"font-family: 'Comic Sans MS'; font-size: 18px;\"><span style=\"background-color: rgb(255, 0, 0);\">You</span> <span style=\"background-color: rgb(255, 156, 0);\">sure</span> <span style=\"background-color: rgb(255, 255, 0);\">can</span> <span style=\"background-color: rgb(0, 255, 0);\">Tom</span><span style=\"background-color: rgb(0, 0, 255);\">!!!</span></span></p>
 ```
 
-Sooo... we can't just do a simple truncate of this down to 15 characters. I mean, we can...
+Sooo... we can't just do a simple truncate of this down to 15 characters. I mean, we can... 
 
-...IF WE'RE NUBZ!
+...IF WE'RE NUBZ! 
 
 But `pathable` is not a nub:
 
@@ -991,7 +1036,7 @@ Go to `/client/javascript` and literally just chuck this script's `jquery.trunca
 And now we can go ahead and create a helper for our template:
 
 ```javascript
-/client/templates/orion/comments_index_blurb_cell.html
+/client/templates/orion/comments_index_blurb_cell.js
 
 Template.commentsIndexBlurbCell.helpers({
 
@@ -1015,7 +1060,7 @@ Comments = new orion.collection('comments', {
   singularName: 'comment', // The name of one of these items
   pluralName: 'comments', // The name of more than one of these items
   link: {
-    title: 'Comments'
+    title: 'Comments' 
   },
   /**
    * Tabular settings for this collection
@@ -1024,9 +1069,9 @@ Comments = new orion.collection('comments', {
     // here we set which data columns we want to appear on the data table
     // in the CMS panel
     columns: [
-      {
-        data: "author",
-        title: "Author"
+      { 
+        data: "author", 
+        title: "Author" 
       },{
         data: "postId",
         title: "Post Title",
@@ -1057,7 +1102,7 @@ And... done.
 
 ##Dictionary (updated 7/28/2015)##
 
-Let's go back to the Microscope main page. Say that you wanted to add a little description blurb after the word `Microscope` at the top left.
+Let's go back to the Microscope main page. Say that you wanted to add a little description blurb after the word `Microscope` at the top left. 
 
 - You not only want to add a description, but you want to be able to periodically change it as well AND you want text formatting on it AND you don't want to touch any code to change it - all you want is to change it from the OrionJS admin panel from inside of an update form.
 
@@ -1079,7 +1124,7 @@ orion.dictionary.addDefinition('title', 'mainPage', {
     max: 40
 });
 
-orion.dictionary.addDefinition('description', 'mainPage',
+orion.dictionary.addDefinition('description', 'mainPage', 
   orion.attribute('summernote', {
     label: 'Site Description',
     optional: true
@@ -1097,9 +1142,9 @@ orion.dictionary.addDefinition('termsAndConditions', 'submitPostPage',
 `orion.dictionary.addDefinition()` takes three arguments:
 ```
 orion.dictionary.addDefinition(
-   nameOfYourDictionaryItem,
-   categoryOfYourDictionaryItem,
-   schemaForYourDictionaryItem
+   nameOfYourDictionaryItem, 
+   categoryOfYourDictionaryItem, 
+   schemaForYourDictionaryItem 
 );
 ```
 You'll see how this pans out in a little bit.
@@ -1142,12 +1187,12 @@ You'll see how this pans out in a little bit.
     </div>
     <input type="submit" value="Submit" class="btn btn-primary"/>
   </form>
-
+  
   {{#if dict 'submitPostPage.termsAndConditions'}}
   <div>TERMS AND CONDITIONS</div>
   <div>{{{ dict 'submitPostPage.termsAndConditions' }}}</div>
   {{/if}}
-
+  
 </template>
 ```
 Let's look at the damage!
@@ -1172,9 +1217,11 @@ So PRO! The clipping-off of the T&C gives legitimacy and trustworthiness to the 
 
 OrionJS has the ability to define two types of relationships between collection objects, `hasOne` and `hasMany`. You can use these relationships to easily do CRUD between collections inside of the admin backend.
 
+To add the ability to define these two relationships, do:
+
 `meteor add orionjs:relationships`
 
-In Microscope:
+In the case of Microscope:
 
 `Posts` has many `Comments`
 `Comments` has one `Post`
@@ -1183,7 +1230,7 @@ In Microscope:
 
 Let's do `hasOne` first. Just like with a traditional SQL database, the relationships are defined in the schema as well.
 
-```
+```javascript
 /lib/collections/comments.js
 
 Comments.attachSchema(new SimpleSchema({
@@ -1219,7 +1266,111 @@ Comments.attachSchema(new SimpleSchema({
 }));
 ```
 
-Now go to the admin backend and click on a comment:
+####Chicken and the Egg####
+
+By now I hope that things have blown up in the server:
+
+`W20150731-06:35:14.565(-7)? (STDERR) ReferenceError: Posts is not defined`
+
+Let's do a quick summary of our two files, `comments.js` and `posts.js`:
+
+```javascript
+/lib/collections/comments.js
+
+Comments = new orion.collection('comments', {
+
+  // creates the collection and defines how the collection is represented as a table in OrionJS 
+
+});
+
+Comments.attachSchema(new SimpleSchema({
+
+  // defines the expected data types for each value inside a Comment document
+  // defines the relationship of a Comment document to a Post document
+
+});
+```
+```javascript
+/lib/collections/posts.js
+
+Posts = new orion.collection('posts', {
+
+  // creates the collection and defines how the collection is represented as a table in OrionJS 
+
+});
+
+Posts.attachSchema(new SimpleSchema({
+
+  // defines the expected data types for each value inside a Post document
+  // defines the relationship of a Post document to a Comment document
+
+});
+```
+
+See the problem?
+
+Meteor will load `comments.js` first because, for files residing in the same folder, Meteor will load files first in numerical order and then in alphabetical order. The problem arises because the `Comments` schema defines the relationship of the `Comments` collection to the `Posts` collection. The code in `comments.js` is referencing `Posts`, which doesn't exist yet because `Post = new orion.collection('posts', {...})` in `Posts.js` hasn't run yet. Basically, Meteor's trying to do this:
+
+1. create the `Comments` collection.
+2. define the `Comments` schema, which requires the `Posts` collection to exist.
+3. create the `Posts` collection.
+4. define the `Posts` schema, which will require the `Comments` collection to exist.
+
+So it errors out at `#2`. Well.... this is awkward. 
+
+Ideally, we would like to do things in this order:
+
+1. create the `Posts` and `Comments` collections.
+2. define the `Posts` and `Comments` schemas, which depend on the above collections existing beforehand.
+
+####Correcting File Load Order####
+
+Maybe we should change up our folder structure. I propose:
+
+`/lib/collections/declarations`
+
+  -> `posts.js` and `comments.js` containing code to create both collections
+ 
+`/lib/collections/schemas`
+
+ -> `posts.js` and `comments.js` containing code defining the schemas. The code in the `declarations` folder will run after the code in the `schemas` folder because teh alphabets.
+
+```javascript
+/lib/collections/declarations/comments.js
+
+Comments = new orion.collection('comments', {...});
+
+Meteor.methods({...});
+```
+
+```javascript
+/lib/collections/declarations/posts.js
+
+Posts = new orion.collection('posts', {...});
+
+Posts.allow({...});
+
+Posts.deny({...});
+
+validatePost = function (post) {...};
+
+Meteor.methods({...});
+
+```
+
+```javascript
+/lib/collections/schemas/comments.js
+
+Comments.attachSchema(new SimpleSchema({...}));
+```
+
+```javascript
+/lib/collections/schemas/posts.js
+
+Posts.attachSchema(new SimpleSchema({...}));
+```
+
+Ok, re-arrange your code according to the structure above and afterwards go to the admin backend and click on a comment:
 
 ![enter image description here](https://lh3.googleusercontent.com/4t50qpBophwbQ3q-gYqMaI2NDO6mJDYTlBNTgsc4Qok=s0 "Screenshot from 2015-07-28 03:24:36.png")
 
@@ -1230,7 +1381,7 @@ Will you look at that... OrionJS was able to determine the specific `post` that 
 One `Post` has many `Comments`. Let's go to the schema for `Posts`
 
 ```javascript
-/lib/collections/posts.js
+/lib/collections/schemas/posts.js
 
 Posts.attachSchema(new SimpleSchema({
 
@@ -1315,16 +1466,192 @@ Let's see it!
 
 ![enter image description here](https://lh3.googleusercontent.com/uM36XR54Q94ZpFu5dwqukgRRb318eoMtvQ72Kfn4PTg=s0 "Screenshot from 2015-07-28 04:36:28.png")
 
-Niiiice.
+Niiiice. 
 
-BUT let's talk about the limitations of defining relationships:
+###Multiple Relationships (updated 7/31/2015)###
+
+In the case of the `Comments` collection, a single `Comment` has one `Post`, which we defined above, but it also has one  `User` (the comment author). So let's take the comment's `userId` field and create a `hasOne` relationship with a `comment`:
+
+```javascript
+/lib/collections/schemas/comments.js
+
+Comments.attachSchema(new SimpleSchema({
+  // here is where we define `a comment has one post`
+  // Each document in Comment has a postId
+  postId: orion.attribute('hasOne', {
+    type: String,
+    // the label is the text that will show up on the Update form's label
+    label: 'Post',
+    // optional is false because you shouldn't have a comment without a post
+    // associated with it
+    optional: false
+  }, {
+    // specify the collection you're making the relationship with
+    collection: Posts,
+    // the key whose value you want to show for each Post document on the Update form
+    titleField: 'title',
+    // dunno
+    publicationName: 'someRandomString',
+  }),
+  // here is where we define `a comment has one user (author)`
+  // Each document in Comment has a userId
+  userId: orion.attribute('hasOne', {
+    type: String,
+    label: 'Author',
+    optional: false
+  }, {
+    collection: Meteor.users,
+    // the key whose value you want to show on the Update form
+    titleField: 'profile.name',
+    publicationName: 'anotherRandomString',
+  }),
+  author: {
+    type: String,
+    optional: false,
+    autoform: {
+      type: 'hidden',
+      label: false
+    }
+  },
+  submitted: {
+    type: Date,
+    optional: false,
+  },
+  body: orion.attribute('summernote', {
+    label: 'Body'
+  }),
+  image: orion.attribute('image', {
+    optional: true,
+    label: 'Comment Image'
+  }),
+}));
+``` 
+
+![enter image description here](https://lh3.googleusercontent.com/3OSrvBsw4ScDzxyRmt5_hE7Nk5-EwDN7O3Iwz-azBxY=s0 "Screenshot from 2015-07-31 18:39:07.png")
+
+Ah, nice. So it looks like we got a drop-down menu that has already been pre-filled with the name of the author. 
+
+Change the `Author` to Tom Coleman and press the `Save` button.
+
+When we change the author with this drop-down menu, the `userId` property in this comment document will be updated to the `userId` of the new author.
+
+But there's a problem because this comment document also has a field called `author`. 
+
+```javascript
+{
+    _id: "DQEwf83xnAusEw2Nt",
+    postId: "CaagbmWYHH9Kp6w2P",
+    userId: "5uhuWaSFdMMWc6G2i", // this ID has been updated and connects to Tom Coleman
+    author: "Sacha Greif", // but this hasn't been changed to "Tom Coleman"
+    submitted: ISODate("2015-08-01T00:00:00Z"),
+    body: "<p><span ... </span></p>"
+}
+```
+
+The `author` property was originally set in the Meteor Method called `commentInsert`, and it was called when this comment was originally created in `/client/templates/comments/comment_submit.js`.
+
+Unfortunately we haven't made any functionality that updates the `author` string when the `userId` value gets changed, which leads us to...
+
+####Limitations of Defining Relationships####
+
+MongoDB is inherently non-relational and implementing hard-relations like in an SQL DB requires extra code (which isn't currently available in the `orionjs:relationships` package). Be very careful setting "relationships." You can easily get some marvelous data inconsistencies that will LITERALLY lead to the extinction of all cats, or at the very least the problem we have above.
+
+For a good read on modeling data, check this out: http://docs.mongodb.org/manual/core/data-model-design/
+
+In addition to what we just mentioned:
 
 - If you remove a comment on the Update Post page, it will NOT automatically remove that post from the associated Update Comment page or on the main website.
 
 - Likewise, if you change the post for a particular comment in the Update Comment page, it will also not automatically reflect in the associated Post page or on the main website.
 
-- This is because MongoDB is inherently non-relational and implementing hard-relations like in an SQL DB requires extra code (which isn't currently available in this `orionjs:relationships` package.
+To change the `author` value when the `userId` changes on a `Comments` document, use this code (kind of hacky):
 
-- In conclusion, be very careful setting "relationships." You can easily get some marvelous data inconsistencies that will LITERALLY lead to the extinction of all cats.
+```javascript
+/server/collections/comments.js
 
-##Custom Functions (none)##
+// When there is a change to userId, author gets updated
+var query = Comments.find();
+var handle = query.observeChanges({
+  changed: function(commentId, changedField){
+    if(changedField.userId){
+      var username = Meteor.users.findOne(changedField.userId).profile.name;
+      Comments.update({_id: commentId}, {$set: {author: username}});
+    };
+  }
+});
+```
+
+##Setting Roles and Permissions (updated 8/3/2015)##
+
+As a user with an `admin` role, you are able to do full CRUD on every single collection in Microscope, which includes user accounts, the dictionary, and other configuration variables like the AWS secret key. 
+
+But sometimes you want to give an undervalued and underpaid employee different permissions so that they are still able to log into OrionJS and manage things for you without being able to see or update *everything* in your system. As an evil asshole you want to lock people out of certain things, ya know?
+
+So we're going to want to define another role in addition to the `admin` role.
+
+By default, any new role you create will be locked out of everything, which is why you want to create a role and then set some `allow` rules. Check out the comments for explanations and [here](https://github.com/orionjs/documentation/blob/39cd73a29b112fe8f8b9ac0e56492fd00018b252/docs/accounts/roles.md) for further reading.
+
+```javascript
+/lib/roles/underpaid_worker.js
+
+/*
+ * First you must define the role
+ */
+UnderpaidWorker = new Roles.Role('underpaidWorker');
+
+/**
+ * Allow the actions of the collection
+ */
+UnderpaidWorker.allow('collections.posts.index', true); // Allows the role to see the link in the sidebar
+UnderpaidWorker.allow('collections.posts.insert', false); // Allows the role to insert documents
+UnderpaidWorker.allow('collections.posts.update', true); // Allows the role to update documents
+UnderpaidWorker.allow('collections.posts.remove', true); // Allows the role to remove documents
+UnderpaidWorker.allow('collections.posts.showCreate', false); // Makes the "create" button visible
+UnderpaidWorker.allow('collections.posts.showUpdate', true); // Allows the user to go to the update view
+UnderpaidWorker.allow('collections.posts.showRemove', true); // Shows the delete button on the update view
+
+/**
+ * Set the index filter.
+ * This part is very important and sometimes is forgotten.
+ * Here you must specify which documents the role will be able to see in the index route
+ */
+UnderpaidWorker.helper('collections.posts.indexFilter', {}); // Allows the role to see all documents
+
+/**
+ * Allow the actions of the collection
+ */
+UnderpaidWorker.allow('collections.comments.index', true); // Allows the role to see the link in the sidebar
+UnderpaidWorker.allow('collections.comments.insert', false); // Allows the role to insert documents
+UnderpaidWorker.allow('collections.comments.update', true); // Allows the role to update documents
+UnderpaidWorker.allow('collections.comments.remove', true); // Allows the role to remove documents
+UnderpaidWorker.allow('collections.comments.showCreate', false); // Makes the "create" button visible
+UnderpaidWorker.allow('collections.comments.showUpdate', true); // Allows the user to go to the update view
+UnderpaidWorker.allow('collections.comments.showRemove', true); // Shows the delete button on the update view
+
+/**
+ * Set the index filter.
+ * This part is very important and sometimes is forgotten.
+ * Here you must specify which documents the role will be able to see in the index route
+ */
+UnderpaidWorker.helper('collections.comments.indexFilter', {}); // Allows the role to see all documents
+``` 
+
+We are not allowing this underpaid worker to insert new posts or comments because we want to censor free speech as much as possible.
+
+Great! Now we need to assign a user to this role. I'm way, *way* too lazy to create a new user so let's just use an existing one:
+
+```javascript
+/server/roles.js
+
+var tom = Meteor.users.findOne({username: 'tom'});
+Roles.addUserToRoles( tom._id ,  ["admin"] );
+
+var nameIcantSpel = Meteor.users.findOne({username: 'sacha'});
+Roles.removeUserFromRoles( nameIcantSpel._id, ["admin"] );
+Roles.addUserToRoles( nameIcantSpel._id ,  ["underpaidWorker"] );
+```
+
+Log in as Sexy and poke around (harr-harr):
+
+![enter image description here](https://lh3.googleusercontent.com/6NhTuVXhi9bDOudFXw29Hpl_ZNNQgT184WAR2FqKJ-8=s0 "Screenshot from 2015-08-03 17:12:31.png")
+
