@@ -220,7 +220,7 @@ Instead, each separate `role` is stored in a `Roles` collection and the `userId`
 ### Getting Roles###
 Let's screw around in the Chrome console before we do anything. While in the `Accounts` admin page, do:
 
-```console
+```
 var id = Meteor.users.findOne({username: "sacha"})._id;
 Roles.userHasRole(id, "admin")
 
@@ -230,7 +230,7 @@ It should return `true`. We got Sesha's userId and then used that ID to check if
 
 Likewise, each user has a `roles()` and `hasRole()` method on its object:
 
-```console
+```
 // gets the currently logged in user, which should be Sassha
 var user = Meteor.user();
 user.roles();
