@@ -13,85 +13,106 @@ Our collection is named `subscribers` and we are going to extend its index.
 We start by creating a template file that displays the usual title, a tabular table
 and an additional button used for the CSV export.
 
-```jade
-// File: subscribersIndex.jade
+```html
+<!-- File: subscribersIndex.jade -->
 
-template(name='subscribersIndex')
-  // subscribersIndex
-  +Layout template='orionCpTitle'
-    | {{ collection.title }}
-    if collection.canShowCreate
-      a(href="{{ collection.createPath }}"): i.fa.fa-plus
-  +Layout template='orionCpContentContainer'
-    if collection.canIndex
-      if showTable
-        +tabular table=collection.tabularTable class='table index-table'
-      // This is our additional button
-      button.import-csv CSV export
+<template name='subscribersIndex'>
+  {{#Layout template='orionCpTitle'}}
+    {{ collection.title }}
+    {{#if collection.canShowCreate}}
+      <a href="{{ collection.createPath }}">
+        <i class="fa fa-plus"></i>
+      </a>
+    {{/if}}
+  {{/Layout}}
+  {{#Layout template='orionCpContentContainer'}}
+    {{#if collection.canIndex}}
+      {{#if showTable}}
+        {{> tabular table=collection.tabularTable class='table index-table'}}
+      {{/if}}
+      {{!-- This is our additional button --}}
+      <button class='import-csv'>CSV export</button>
+    {{/if}}
+  {{/Layout}}
+</template>
 ```
 
 Now we set the logic in:
 
-```coffee
-# File: subscribersIndex.coffee
+```js
+ReactiveTemplates.set('collections.subscribers.index', 'subscribersIndex');
 
-# Here we ask Orion to replace the basic index for the subscriber with our
-#  freshly created new template subscribersIndex. This addition is done
-#  client side and server side.
-ReactiveTemplates.set 'collections.subscribers.index', 'subscribersIndex'
+if (Meteor.isClient) {
+  Template.subscribersIndex.onCreated(function() {
+    appLog.info('subscribersIndex created');
+    this.subscribersIndex_showTable = new ReactiveVar;
+    return this.subscribersIndex_showTable.set(false);
+  });
+  Template.subscribersIndex.onRendered(function() {
+    return this.autorun((function(_this) {
+      return function() {
+        Template.currentData();
+        _this.subscribersIndex_showTable.set(false);
+        return Meteor.defer(function() {
+          return _this.subscribersIndex_showTable.set(true);
+        });
+      };
+    })(this));
+  });
+  Template.subscribersIndex.helpers({
+    showTable: function() {
+      return Template.instance().subscribersIndex_showTable.get();
+    }
+  });
+  Template.subscribersIndex.events({
+    'click tr': function(e, t) {
+      var collection, dataTable, path, rowData;
+      if (!$(event.target).is('td')) {
+        return;
+      }
+      collection = Template.currentData().collection;
+      dataTable = $(e.target).closest('table').DataTable();
+      rowData = dataTable.row(e.currentTarget).data();
+      if (rowData != null ? rowData.canShowUpdate() : void 0) {
+        path = collection.updatePath(rowData);
+        return RouterLayer.go(path);
+      }
+    },
+    'click button.import-csv': function(e, t) {
+      var csvButton, subscription;
+      csvButton = t.$('button.import-csv');
+      csvButton.addClass('disabled');
+      return subscription = Meteor.subscribe('allSubscribers', {
+        onReady: function() {
+          var csv, data, i, len, sub;
+          data = Subscribers.find({}, {
+            name: 1,
+            forname: 1,
+            _id: 0
+          }).fetch();
+          csv = (_.keys(data[0])).join(';');
+          for (i = 0, len = data.length; i < len; i++) {
+            sub = data[i];
+            csv += '\n' + (_.values(sub)).join(';');
+          }
+          blobDownload(csv, 'subscribers.csv', 'text/csv');
+          return csvButton.removeClass('disabled');
+        },
+        onError: function(err) {
+          sAlert.warning('CSV subscription failed');
+          appLog.warn('CSV subscription failed', err);
+          return csvButton.removeClass('disabled');
+        }
+      });
+    }
+  });
+}
 
-# Now, client side, we set the default logic.
-if Meteor.isClient
-  Template.subscribersIndex.onCreated ->
-    appLog.info 'subscribersIndex created'
-    @subscribersIndex_showTable = new ReactiveVar
-    @subscribersIndex_showTable.set false
-
-  Template.subscribersIndex.onRendered ->
-    @autorun =>
-      Template.currentData()
-      @subscribersIndex_showTable.set false
-      Meteor.defer =>
-        @subscribersIndex_showTable.set true
-
-  Template.subscribersIndex.helpers
-    showTable: ->
-      Template.instance().subscribersIndex_showTable.get()
-
-  Template.subscribersIndex.events
-    'click tr': (e, t) ->
-      return unless $(event.target).is 'td'
-      collection = Template.currentData().collection
-      dataTable = $(e.target).closest('table').DataTable()
-      rowData = dataTable.row(e.currentTarget).data()
-      if rowData?.canShowUpdate()
-        path = collection.updatePath rowData
-        RouterLayer.go path
-
-    # Here we create the behavior for the new button
-    'click button.import-csv': (e, t) ->
-      # Prevent further actions
-      csvButton = t.$ 'button.import-csv'
-      csvButton.addClass 'disabled'
-      subscription = Meteor.subscribe 'allSubscribers',
-        onReady: ->
-          data = Subscribers.find({},{name: 1, forname: 1, _id: 0}).fetch()
-          # Create the header
-          csv = (_.keys data[0]).join ';'
-          for sub in data
-            csv += '\n' + (_.values sub).join ';'
-          # Automatic download of the CSV as a Blob file
-          blobDownload csv, 'subscribers.csv', 'text/csv'
-          # Allow further extracts
-          csvButton.removeClass 'disabled'
-        onError: (err) ->
-          sAlert.warning 'CSV subscription failed'
-          appLog.warn 'CSV subscription failed', err
-          # Allow further extracts
-          csvButton.removeClass 'disabled'
-
-if Meteor.isServer
-  Meteor.publish 'allSubscribers', -> Subscribers.find()
+if (Meteor.isServer) {
+  Meteor.publish('allSubscribers', function() {
+    return Subscribers.find();
+  });
+}
 ```
 
 ### Tip

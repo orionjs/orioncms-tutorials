@@ -48,5 +48,15 @@
     "file": "admin-template-override.md",
     "smallImage": "http://apod.nasa.gov/apod/image/1308/arp271_gemini_2048.jpg",
     "bigImage": "http://apod.nasa.gov/apod/image/1308/arp271_gemini_2048.jpg"
+  },
+  {
+    "slug": "logging-system",
+    "title": "Logging system",
+    "description": "Create your own logger or re-use Orion's one",
+    "author": "Pierre-Eric Marchandet",
+    "authorGithub": "PEM--",
+    "file": "logging-system.md",
+    "smallImage": "https://s-media-cache-ak0.pinimg.com/originals/c5/68/46/c56846d983440c26fe430727d25f76b8.jpg",
+    "bigImage": "https://s-media-cache-ak0.pinimg.com/originals/c5/68/46/c56846d983440c26fe430727d25f76b8.jpg"
   }
 ]
