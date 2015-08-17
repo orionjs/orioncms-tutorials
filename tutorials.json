@@ -19,7 +19,7 @@
     "smallImage": "http://i.imgur.com/U7QGtra.jpg",
     "bigImage": "http://i.imgur.com/l43lRWL.jpg"
   },
-   {
+  {
     "slug": "securing-orion",
     "title": "Security and Browser policies",
     "description": "For protecting your server against script injection and your clients against XSS attacks",
@@ -29,7 +29,7 @@
     "smallImage": "http://i.imgur.com/ZKtmTLq.jpg",
     "bigImage": "http://i.imgur.com/bXKOYu0.jpg"
   },
-   {
+  {
     "slug": "how-to-contribute",
     "title": "How to Contribute",
     "description": "Set up your project so you contribute code",
@@ -38,5 +38,15 @@
     "file": "how-to-contribute.md",
     "smallImage": "http://currentlabel.co.uk/hammock-thumb.jpg",
     "bigImage": "http://currentlabel.co.uk/hammock.jpg"
+  },
+  {
+    "slug": "admin-template-override",
+    "title": "Admin template override",
+    "description": "Add specific behavior to your admin interface",
+    "author": "Pierre-Eric Marchandet",
+    "authorGithub": "PEM--",
+    "file": "admin-template-override.md",
+    "smallImage": "http://apod.nasa.gov/apod/image/1308/arp271_gemini_2048.jpg",
+    "bigImage": "http://apod.nasa.gov/apod/image/1308/arp271_gemini_2048.jpg"
   }
 ]
