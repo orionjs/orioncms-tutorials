@@ -683,7 +683,7 @@ Some notes:
 - currently, uploading images directly from Summernote doesn't work
 - images will be hosted through Amazon S3. I don't go over how to do it with `GridFS` or other filesystem packages.
 
-`meteor add orionjs:image-attribute orionjs:filesystem orionjs:s3`
+`meteor add orionjs:image-attribute orionjs:s3`
 
 ####Setting up S3####
 
@@ -691,84 +691,7 @@ You're going to want to follow this tutorial FIRST to set up your Amazon S3:
 
 https://github.com/Lepozepo/S3/#amazon-s3-uploader
 
-Make sure that you've got your S3 credentials in your `server` folder. It wouldn't hurt to add this file to your `.gitignore` file as well. On second thought, scratch what I just said and send me links to your repos instead... because... porn.
-
-```javascript
-/server/s3_credentials.js
-
-// something like this
-S3.config = {
-    key: 'BVT&(Y*(H&TG*&H',
-    secret: 'B^&Y*UGUFGO*(PU(/7sdfgwTVwS/',
-    bucket: 'meteor.microscopelolololololol',
-    region: 'us-west-1'
-};
-```
-
-####Configuring OrionJS####
-
-Create a new file:
-
-```javascript
-/lib/orion_filesystem.js
-
-/**
- * Official S3 Upload Provider
- * 
- * Please replace this function with the 
- * provider you prefer.
- *
- * If success, call success(publicUrl);
- * you can pass data and it will be saved in file.meta
- * Ej: success(publicUrl, {local_path: '/user/path/to/file'})
- *
- * If it fails, call failure(error).
- *
- * When the progress change, call progress(newProgress)
- */
-orion.filesystem.providerUpload = function(options, success, failure, progress) {
-  S3.upload({
-    files: options.fileList,
-    path: 'orionjs',
-  }, function(error, result) {
-    debugger
-    if (error) {
-      failure(error);
-    } else {
-      success(result.secure_url, { s3Path: result.relative_url });
-      result;
-      debugger
-    }
-    S3.collection.remove({})
-  });
-  Tracker.autorun(function () {
-    var file = S3.collection.findOne();
-    if (file) {
-      progress(file.percent_uploaded);
-    }
-  });
-};
-
-/**
- * Official S3 Remove Provider
- * 
- * Please replace this function with the 
- * provider you prefer.
- *
- * If success, call success();
- * If it fails, call failure(error).
- */
-orion.filesystem.providerRemove = function(file, success, failure)  {
-  S3.delete(file.meta.s3Path, function(error, result) {
-    if (error) {
-      failure(error);
-    } else {
-      success();
-    }
-  })
-};
-```
-What this bit of code does is it defines two methods - one for uploading a file to S3 and another for removing a file from S3. It also adds a progress bar during the upload process.
+Add the AWS credentials in `http://localhost:3000/admin/config` and you are ready.
 
 Now it's schema time again since we want to add a file upload section to our Comment Update form!
 
