@@ -105,6 +105,7 @@ along with some colored styles thanks to [Log with style](https://www.npmjs.com/
 which is also exposed by Orion.
 
 On client side, Orion's log system exposes the following API:
+
 * `bunyan`: [Bunyan](https://github.com/trentm/node-bunyan).
 * `process`: [Browserified Node's process](https://www.npmjs.com/package/process).
 * `WritableStream`: [Browserified Node's WritableStream](https://nodejs.org/api/stream.html#stream_class_stream_writable).
@@ -159,6 +160,7 @@ Now we have our custom log formatter client side named `myLogFormatter`.
 For this part, we are using an already made formatter available in the NPM registry: [Bunyan Format](https://www.npmjs.com/package/bunyan-format).
 
 On server side, Orion's log system exposes the following API:
+
 * `bunyan`: [Bunyan](https://github.com/trentm/node-bunyan).
 * `bunyanFormat`: [Bunyan Format](https://www.npmjs.com/package/bunyan-format).
 
